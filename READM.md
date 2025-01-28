@@ -187,6 +187,124 @@ db.myCollection.deleteMany({ age: { $lt: 30 } })
 
 ---
 
+## Query Operators
+
+### Comparison Operators
+- `$eq` – Equals: `{ age: { $eq: 25 } }`
+- `$ne` – Not equal: `{ age: { $ne: 25 } }`
+- `$gt` – Greater than: `{ age: { $gt: 25 } }`
+- `$gte` – Greater than or equal: `{ age: { $gte: 25 } }`
+- `$lt` – Less than: `{ age: { $lt: 25 } }`
+- `$lte` – Less than or equal: `{ age: { $lte: 25 } }`
+
+### Logical Operators
+- `$and` – AND: `{ $and: [{ age: { $gt: 25 } }, { city: "New York" }] }`
+- `$or` – OR: `{ $or: [{ age: { $lt: 25 } }, { city: "Chicago" }] }`
+- `$not` – NOT: `{ age: { $not: { $gt: 25 } } }`
+
+
+### **1. `$and` – Logical AND**
+
+#### Syntax:
+```javascript
+db.collection.find({
+  $and: [
+    { <field1>: <condition1> },
+    { <field2>: <condition2> }
+  ]
+})
+```
+
+#### Example:
+Find documents where:
+- Age is greater than 25 **AND**
+- City is "New York".
+
+```javascript
+db.collection.find({
+  $and: [
+    { age: { $gt: 25 } },
+    { city: "New York" }
+  ]
+})
+```
+
+#### Example Document Match:
+```json
+{
+  "name": "Alice",
+  "age": 30,
+  "city": "New York"
+}
+```
+
+---
+
+### **2. `$or` – Logical OR**
+
+#### Syntax:
+```javascript
+db.collection.find({
+  $or: [
+    { <field1>: <condition1> },
+    { <field2>: <condition2> }
+  ]
+})
+```
+
+#### Example:
+Find documents where:
+- Age is less than 25 **OR**
+- City is "Chicago".
+
+```javascript
+db.collection.find({
+  $or: [
+    { age: { $lt: 25 } },
+    { city: "Chicago" }
+  ]
+})
+```
+
+#### Example Document Match:
+```json
+{
+  "name": "Bob",
+  "age": 22,
+  "city": "San Francisco"
+}
+```
+OR
+```json
+{
+  "name": "Charlie",
+  "age": 35,
+  "city": "Chicago"
+}
+```
+
+---
+
+### **3. `$not` – Logical NOT**
+
+#### Syntax:
+```javascript
+db.collection.find({
+  <field>: { $not: { <condition> } }
+})
+```
+
+#### Example:
+Find documents where:
+- Age **is NOT greater than 25**.
+
+```javascript
+db.collection.find({
+  age: { $not: { $gt: 25 } }
+})
+```
+
+
 ### **Conclusion**
 
 A database is essential for storing and managing data in any application. MongoDB is a powerful, flexible, and modern NoSQL database that allows developers to work with data in a way that matches their application’s needs. It’s especially suitable for applications that require speed, scalability, and flexibility.
